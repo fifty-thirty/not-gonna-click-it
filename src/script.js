@@ -843,34 +843,38 @@ class Target {
         }
     }
 }
-
 const targets = []
 
 /**
  * Animate
  */
 const clock = new THREE.Clock()
+let delta = 0;
+let interval = 1 / 60;
 
-const tick = () =>
-{
+const tick = () => {
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick)
+    delta += clock.getDelta();
+
     if(wagmi && ngmi) {
+        if (delta  > interval) {
+            // The draw or time dependent code are here
+            game.updateScore()
+            if(targets.length === 0) {
+                targets.push(new Target())
+                scene.add(targets[targets.length - 1].model)
+            }
+            targets.forEach(item => item.update())
 
-        game.updateScore()
+            renderer.render(scene, camera)
 
-        if(targets.length === 0) {
-            targets.push(new Target())
-            scene.add(targets[targets.length - 1].model)
+            delta = delta % interval;
         }
-
-        targets.forEach(item => item.update())
-
     }
 
     // Render
     renderer.render(scene, camera)
-
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
 }
 
 tick()
