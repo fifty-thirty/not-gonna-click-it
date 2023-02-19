@@ -12,7 +12,7 @@ var web3ModalRef = new Web3Modal({
 /**
  * Contract Details
  */
-export const NFT_CONTRACT_ADDRESS = '0x17C114fA62e67826A3e11105d82036dB010236A4';
+export const NFT_CONTRACT_ADDRESS = '0x72Bd6E1e0c0b715A5ACF18512D2415B82D303eED';
 export const abi = [
   {
     "inputs": [
