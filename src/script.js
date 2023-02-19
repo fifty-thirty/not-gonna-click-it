@@ -3,6 +3,43 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Web3Modal from "web3modal";
 import { Contract, providers, utils } from "ethers";
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, push, set } from "firebase/database";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyA0UEiNQPJm2R6M7lujN426WA_LXnxj10k",
+  authDomain: "ngci-cccdb.firebaseapp.com",
+  projectId: "ngci-cccdb",
+  storageBucket: "ngci-cccdb.appspot.com",
+  messagingSenderId: "457187296803",
+  appId: "1:457187296803:web:1f19c8770b26e1cada5396",
+  measurementId: "G-JKR0884JQY",
+  databaseURL: "https://ngci-cccdb-default-rtdb.europe-west1.firebasedatabase.app/",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
+
+const d = new Date();
+
+function writeUserData(score) {
+    const db = getDatabase();
+    const postListRef = ref(db, 'scores');
+    const newPostRef = push(postListRef);
+    set(newPostRef, {
+        'score': score,
+        'time': d.getTime()
+    });
+}
+
 var web3ModalRef = new Web3Modal({
     network: "mainnet",
     providerOptions: {},
@@ -771,6 +808,7 @@ class Game {
     }
 
     gameOver() {
+        if(this.score) writeUserData(this.score)
         if(this.score > this.highscore) {
             this.setNewHighscore()
             console.log(this.highscore)
