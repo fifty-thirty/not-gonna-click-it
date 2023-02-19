@@ -1,0 +1,19 @@
+{
+  "name": "not-gonna-click-it",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^4.0.4"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "lil-gui": "^0.17.0",
+    "three": "^0.148.0",
+    "web3modal": "^1.9.12"
+  }
+}
